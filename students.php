@@ -1,16 +1,15 @@
 <?php
-require 'vendor/autoload.php'; // Composer's autoload file
+require 'vendor/autoload.php';
 
 use MongoDB\Client;
 
-// Connect to MongoDB Atlas
+
 $client = new Client("mongodb+srv://kavindupiyumal0121:7mQRouCy34geTQGS@cluster0.erbnzvi.mongodb.net/face_attendance");
 
-// Select database and collection
 $db = $client->face_attendance;
 $students = $db->students;
 
-// Fetch all students
+
 $all_students = $students->find();
 ?>
 
@@ -18,28 +17,6 @@ $all_students = $students->find();
 <html>
 <head>
     <title>All Students</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            padding: 20px;
-        }
-        h2 {
-            color: #333;
-        }
-        table {
-            border-collapse: collapse;
-            width: 100%;
-            margin-top: 20px;
-        }
-        th, td {
-            border: 1px solid #aaa;
-            padding: 8px;
-            text-align: left;
-        }
-        th {
-            background-color: #eee;
-        }
-    </style>
 </head>
 <body>
 

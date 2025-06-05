@@ -1,5 +1,5 @@
 <?php
-// Redirect to login if not logged in
+
 if (!isset($_SESSION['student_id'])) {
     header("Location: student_login.php");
     exit();
@@ -117,7 +117,6 @@ $profileImage = $student['profile_image'] ?? null;
     <!-- Top Navbar -->
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top shadow">
       <div class="container-fluid">
-        <!-- Sidebar toggle and brand -->
         <div class="d-flex align-items-center">
           <button class="btn btn-sm btn-outline-light me-2" id="menu-toggle">
             <i class="fas fa-bars"></i>
@@ -128,9 +127,9 @@ $profileImage = $student['profile_image'] ?? null;
           </a>
         </div>
 
-        <!-- Right side navigation -->
+
+
         <div class="d-flex align-items-center">
-          <!-- User dropdown (Only for md and above) -->
           <div class="dropdown d-none d-md-block">
             <a href="#" class="nav-link dropdown-toggle text-white d-flex align-items-center" id="userDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
               <div class="me-2 text-end d-none d-md-block">

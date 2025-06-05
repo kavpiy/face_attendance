@@ -1,7 +1,7 @@
 <?php
 use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\Exception;
-require '../vendor/autoload.php'; // Ensure PHPMailer is included
+require '../vendor/autoload.php'; 
 
 use MongoDB\Client;
 
@@ -14,7 +14,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
 
     if ($student) {
         $token = bin2hex(random_bytes(32));
-        $expires = time() + 3600; // 1 hour
+        $expires = time() + 3600; 
 
         $students->updateOne(
             ['Student_email' => $email],
@@ -23,14 +23,14 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
 
         $resetLink = "http://localhost/face_attendance/student/reset_password.php?token=$token";
 
-        // Send Email
+    
         $mail = new PHPMailer(true);
         try {
             $mail->isSMTP();
             $mail->Host = 'smtp.gmail.com';
             $mail->SMTPAuth = true;
-            $mail->Username = 'kavindupiyumal0121@gmail.com'; // your email
-            $mail->Password = 'veqkhygkenbehueq';  // app password
+            $mail->Username = 'kavindupiyumal0121@gmail.com'; 
+            $mail->Password = 'veqkhygkenbehueq';  
             $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;
             $mail->Port = 587;
 

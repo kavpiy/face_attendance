@@ -38,7 +38,7 @@
         </div>
     </div>
 
-    <!-- Footer/Note -->
+    <!-- Footer Note -->
     <div class="text-center text-muted my-4">
         <img src="https://cmb.ac.lk/wp-content/uploads/logo-color.png" alt="" width="30"><br>
         <small>&copy; <?= date("Y") ?> Faculty of Technology, University of Colombo</small>

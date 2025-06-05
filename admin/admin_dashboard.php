@@ -56,7 +56,6 @@ $lecture_id = $_SESSION['lecture_id'];
 </style>
 
 <div class="container-fluid mt-4">
-    <!-- Welcome Card -->
     <div class="card welcome-card mb-4 border-0">
         <div class="card-body p-4 d-flex justify-content-between align-items-center">
             <div>
@@ -69,7 +68,7 @@ $lecture_id = $_SESSION['lecture_id'];
         </div>
     </div>
 
-    <!-- Quick Stats Row -->
+
     <div class="row quick-stats shadow-sm">
         <div class="col-md-4 text-center border-end">
             <h5 class="text-muted mb-1">Admin ID</h5>
@@ -85,9 +84,8 @@ $lecture_id = $_SESSION['lecture_id'];
         </div>
     </div>
 
-    <!-- Main Dashboard Cards -->
+
     <div class="row mt-4">
-        <!-- Attendance Management -->
         <div class="col-md-4 mb-4">
             <div class="card dashboard-card h-100">
                 <div class="card-body text-center p-4">
@@ -108,7 +106,7 @@ $lecture_id = $_SESSION['lecture_id'];
             </div>
         </div>
         
-        <!-- Course Management -->
+
 <?php if ($lecture_id === 'L001'): ?>
         <div class="col-md-4 mb-4">
             <div class="card dashboard-card h-100">
@@ -132,7 +130,6 @@ $lecture_id = $_SESSION['lecture_id'];
             </div>
         </div>
     <?php endif; ?>    
-        <!-- User Management -->
         <div class="col-md-4 mb-4">
             <div class="card dashboard-card h-100">
                 <div class="card-body text-center p-4">
@@ -156,9 +153,8 @@ $lecture_id = $_SESSION['lecture_id'];
         </div>
     </div>
 
-    <!-- System Actions -->
+
     <div class="row">
-        <!-- Account Settings -->
         <div class="col-md-6 mb-4">
             <div class="card dashboard-card h-100">
                 <div class="card-body p-4">
@@ -177,7 +173,7 @@ $lecture_id = $_SESSION['lecture_id'];
             </div>
         </div>
         
-        <!-- System Actions -->
+
         <div class="col-md-6 mb-4">
             <div class="card dashboard-card h-100">
                 <div class="card-body p-4">
@@ -199,7 +195,6 @@ $lecture_id = $_SESSION['lecture_id'];
 </div>
 
 <script>
-    // Update current time every second
     function updateTime() {
         const now = new Date();
         const timeString = now.toLocaleTimeString('en-US', {
@@ -211,9 +206,8 @@ $lecture_id = $_SESSION['lecture_id'];
     }
     
     setInterval(updateTime, 1000);
-    updateTime(); // Initial call
+    updateTime();
     
-    // Add animation to cards on page load
     document.addEventListener('DOMContentLoaded', function() {
         const cards = document.querySelectorAll('.dashboard-card');
         cards.forEach((card, index) => {

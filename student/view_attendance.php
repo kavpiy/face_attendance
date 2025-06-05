@@ -11,7 +11,7 @@ $coursesCol = $db->courses;
 $sessionsCol = $db->sessions;
 $attendanceCol = $db->attendance;
 
-// Assume student ID is stored in session
+
 $studentId = $_SESSION['student_id'] ?? null;
 
 if (!$studentId) {
@@ -27,11 +27,11 @@ if (!$student) {
 $studentName = $student['Student_name'];
 $academicYear = $student['Academic_year'];
 
-// Level selection
+
 $levels = ['Level 1', 'Level 2', 'Level 3', 'Level 4'];
 $selectedLevel = $_GET['level'] ?? '';
 
-// Get courses for selected level
+
 $courses = [];
 if ($selectedLevel) {
     $courses = $coursesCol->find(['Level' => $selectedLevel])->toArray();

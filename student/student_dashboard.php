@@ -79,7 +79,7 @@ $student_id = $_SESSION['student_id'];
         </div>
     </div>
 
-    <!-- Quick Stats Row -->
+
     <div class="row quick-stats shadow-sm">
         <div class="col-md-4 text-center border-end">
             <h5 class="text-muted mb-1">Student ID</h5>
@@ -97,7 +97,6 @@ $student_id = $_SESSION['student_id'];
 
     <!-- Main Dashboard Cards -->
     <div class="row mt-4">
-        <!-- Attendance Tracking -->
         <div class="col-md-4 mb-4">
             <div class="card dashboard-card h-100">
                 <div class="card-body text-center p-4">
@@ -120,13 +119,13 @@ $student_id = $_SESSION['student_id'];
             <div class="card dashboard-card h-100">
                 <div class="card-body text-center p-4">
                     <div class="card-icon text-success">
-                        <i class="fas fa-user-graduate"></i>  <!-- Changed icon to student profile -->
+                        <i class="fas fa-user-graduate"></i>  
                     </div>
-                    <h5 class="card-title">My Profile</h5>  <!-- Changed title -->
-                    <p class="card-text">View and manage your student profile.</p>  <!-- Changed description -->
+                    <h5 class="card-title">My Profile</h5> 
+                    <p class="card-text">View and manage your student profile.</p>  
                     <div class="d-grid gap-2 mt-3">
-                        <a href="profile.php" class="btn btn-success btn-sm btn-icon text-white">  <!-- Changed to profile link -->
-                            <i class="fas fa-eye"></i> View Profile  <!-- Changed button text and icon -->
+                        <a href="profile.php" class="btn btn-success btn-sm btn-icon text-white"> 
+                            <i class="fas fa-eye"></i> View Profile 
                         </a>
                     </div>
                 </div>
@@ -195,7 +194,6 @@ $student_id = $_SESSION['student_id'];
 </div>
 
 <script>
-    // Update current time every second
     function updateTime() {
         const now = new Date();
         const timeString = now.toLocaleTimeString('en-US', {
@@ -207,9 +205,9 @@ $student_id = $_SESSION['student_id'];
     }
     
     setInterval(updateTime, 1000);
-    updateTime(); // Initial call
+    updateTime(); 
     
-    // Add animation to cards on page load
+ 
     document.addEventListener('DOMContentLoaded', function() {
         const cards = document.querySelectorAll('.dashboard-card');
         cards.forEach((card, index) => {

@@ -155,7 +155,7 @@ $filteredCourses = $courses->find($filter, ['sort' => ['Level' => 1, 'Course_nam
                 <option selected disabled>Select Department</option>
                 <?php foreach ($departmentList as $dept): ?>
                   <option value="<?= $dept['Department_id'] ?>">
-                    <?= htmlspecialchars($dept['Department_name']) ?> (<?= htmlspecialchars($dept['Department_id']) ?>)
+                    <?= htmlspecialchars($dept['Department_name']) ?>
                   </option>
                 <?php endforeach; ?>
               </select>

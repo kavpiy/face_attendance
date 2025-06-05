@@ -4,7 +4,7 @@ require '../vendor/autoload.php';
 
 use MongoDB\Client;
 
-// Redirect to login if not logged in
+
 if (!isset($_SESSION['lecture_id'])) {
     header("Location: admin_login.php");
     exit();
@@ -13,12 +13,12 @@ if (!isset($_SESSION['lecture_id'])) {
 $admin_name = $_SESSION['lecture_name'];
 $lecture_id = $_SESSION['lecture_id'];
 
-// Connect to MongoDB
+
 $client = new Client("mongodb+srv://kavindupiyumal0121:7mQRouCy34geTQGS@cluster0.erbnzvi.mongodb.net/");
 $db = $client->face_attendance;
 $collection = $db->lectures;
 
-// Fetch admin data including profile image
+
 $lecture = $collection->findOne(['Lecture_id' => $lecture_id]);
 $profileImage = $lecture['profile_image'] ?? null;
 ?>
@@ -33,7 +33,7 @@ $profileImage = $lecture['profile_image'] ?? null;
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
   <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet">
   <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
-  <!-- SweetAlert2 CDN -->
+
   <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
   <style>
     .navbar {
@@ -92,16 +92,16 @@ $profileImage = $lecture['profile_image'] ?? null;
 
 <div class="d-flex" id="wrapper">
 
-  <!-- Sidebar -->
+
   <div class="bg-dark text-white min-vh-100 pt-4" id="sidebar-wrapper">
     <div class="list-group list-group-flush px-2">
       
-      <!-- Dashboard -->
+
       <a href="admin_dashboard.php" class="list-group-item list-group-item-action bg-dark text-white border-0 py-3">
         📊 Dashboard
       </a>
 
-      <!-- Admin-only links -->
+
       <?php if (isset($_SESSION['lecture_id']) && $_SESSION['lecture_id'] === 'L001'): ?>
         <a href="add_admin.php" class="list-group-item list-group-item-action bg-dark text-white border-0 py-3">
           👨‍🏫 Add Lecture
@@ -111,7 +111,7 @@ $profileImage = $lecture['profile_image'] ?? null;
         </a>
       <?php endif; ?>
 
-      <!-- Common links -->
+
       <a href="add_session.php" class="list-group-item list-group-item-action bg-dark text-white border-0 py-3">
         🕒 Add Session
       </a>
@@ -119,7 +119,7 @@ $profileImage = $lecture['profile_image'] ?? null;
         🗓️ View Attendance
       </a>
 
-      <!-- Mobile-only profile/logout -->
+
       <a href="profile.php" class="list-group-item list-group-item-action bg-dark text-white border-0 py-3 d-block d-md-none">
         👤 Profile
       </a>
@@ -129,13 +129,11 @@ $profileImage = $lecture['profile_image'] ?? null;
     </div>
   </div>
 
-  <!-- Page Content -->
   <div id="page-content-wrapper" class="flex-grow-1">
 
-    <!-- Top Navbar -->
+
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top shadow">
       <div class="container-fluid">
-        <!-- Sidebar toggle and brand -->
         <div class="d-flex align-items-center">
           <button class="btn btn-sm btn-outline-light me-2" id="menu-toggle">
             <i class="fas fa-bars"></i>
@@ -146,9 +144,8 @@ $profileImage = $lecture['profile_image'] ?? null;
           </a>
         </div>
 
-        <!-- Right side navigation -->
+
         <div class="d-flex align-items-center">
-          <!-- User dropdown -->
           <div class="dropdown d-none d-md-block">
             <a href="#" class="nav-link dropdown-toggle text-white d-flex align-items-center" id="userDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
               <div class="me-2 text-end d-none d-md-block">
@@ -181,10 +178,9 @@ $profileImage = $lecture['profile_image'] ?? null;
     </nav>
 
 
-    <!-- Include Bootstrap JS bundle for dropdown functionality -->
+
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     <script>
-      // Toggle sidebar
       document.getElementById('menu-toggle').addEventListener('click', function() {
         document.getElementById('wrapper').classList.toggle('toggled');
       });

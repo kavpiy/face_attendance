@@ -11,14 +11,14 @@ use MongoDB\BSON\ObjectId;
 
 date_default_timezone_set("Asia/Colombo");
 
-// MongoDB connection
+
 $client = new Client("mongodb+srv://kavindupiyumal0121:7mQRouCy34geTQGS@cluster0.erbnzvi.mongodb.net/face_attendance");
 $db = $client->face_attendance;
 $studentsCol = $db->students;
 $sessionsCol = $db->sessions;
 $coursesCol = $db->courses;
 
-// Get current student info
+
 $studentId = $_SESSION['student_id'];
 try {
     $student = $studentsCol->findOne(['_id' => new ObjectId($studentId)]);
@@ -38,11 +38,11 @@ if (!$academicYear) {
     die("<div class='alert alert-danger'>Academic year not found for student.</div>");
 }
 
-// Build course ID to course name map with thorough ID handling
+
 $courseMap = [];
 $courses = $coursesCol->find();
 foreach ($courses as $course) {
-    // Handle all possible ID fields and formats
+
     $possibleIdFields = ['_id', 'Course_id', 'course_id', 'id'];
     foreach ($possibleIdFields as $field) {
         if (isset($course[$field])) {
@@ -54,11 +54,11 @@ foreach ($courses as $course) {
     }
 }
 
-// Get current time
+
 $currentTime = new DateTime();
 $yesterday = (clone $currentTime)->modify('-24 hours');
 
-// Fetch sessions
+
 $sessions = $sessionsCol->find([
     'Academic_year' => $academicYear,
     'Date' => ['$gte' => $yesterday->format('Y-m-d')]
@@ -74,7 +74,7 @@ foreach ($sessions as $session) {
     $startTime = $session['Starttime'];
     $endTime = $session['Endtime'];
     
-    // Handle all possible Course_id formats
+
     $courseId = is_object($session['Course_id']) ? (string)$session['Course_id'] : $session['Course_id'];
     $courseId = trim($courseId);
 
@@ -85,7 +85,7 @@ foreach ($sessions as $session) {
         continue;
     }
 
-    // Determine session status
+
     $status = '';
     if ($currentTime >= $sessionStart && $currentTime <= $sessionEnd) {
         $status = 'Active';
@@ -95,10 +95,10 @@ foreach ($sessions as $session) {
         $status = 'Completed';
     }
 
-    // Find course name - try multiple variations
+
     $courseName = $courseMap[$courseId] ?? null;
     if (!$courseName) {
-        // Try alternative formats if exact match fails
+
         foreach ($courseMap as $id => $name) {
             if (trim($id) === $courseId || trim(strtolower($id)) === strtolower($courseId)) {
                 $courseName = $name;
@@ -117,9 +117,9 @@ foreach ($sessions as $session) {
     ];
 }
 
-// Sort sessions by date and time
+
 usort($filteredSessions, function($a, $b) {
-    // First sort by status priority (Upcoming > Active > Completed)
+
     $statusOrder = ['Upcoming' => 1, 'Active' => 2, 'Completed' => 3];
     $aStatus = $statusOrder[$a['Status']];
     $bStatus = $statusOrder[$b['Status']];
@@ -128,7 +128,7 @@ usort($filteredSessions, function($a, $b) {
         return $aStatus <=> $bStatus;
     }
     
-    // If same status, sort by start time
+
     return $a['Start'] <=> $b['Start'];
 });
 

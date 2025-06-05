@@ -11,28 +11,28 @@ $coursesCol = $db->courses;
 $sessionsCol = $db->sessions;
 $attendanceCol = $db->attendance;
 
-// Levels
+
 $levels = ['Level 1', 'Level 2', 'Level 3', 'Level 4'];
 
-// Get selected level, course, academic year
+
 $selectedLevel = $_GET['level'] ?? '';
 $selectedCourse = $_GET['course'] ?? '';
 $selectedYear = $_GET['academic_year'] ?? '';
 
-// Fetch all courses (for JS filtering)
+
 $allCourses = $coursesCol->find([], ['sort' => ['Course_name' => 1]])->toArray();
 
-// Prepare course filter
+
 $coursesForLevel = [];
 if ($selectedLevel) {
     $coursesForLevel = $coursesCol->find(['Level' => $selectedLevel], ['sort' => ['Course_name' => 1]])->toArray();
 }
 
-// Fetch distinct academic years from students
+
 $academicYears = $studentsCol->distinct('Academic_year');
 sort($academicYears);
 
-// Prepare session data
+
 $sessionDates = [];
 if ($selectedCourse) {
     $sessionCursor = $sessionsCol->find(['Course_id' => $selectedCourse]);
@@ -42,13 +42,15 @@ if ($selectedCourse) {
     sort($sessionDates);
 }
 
-// Get students by academic year
 $students = [];
 if ($selectedCourse && $selectedYear) {
-    $students = $studentsCol->find(['Academic_year' => $selectedYear])->toArray();
+    $students = $studentsCol->find(
+        ['Academic_year' => $selectedYear],
+        ['sort' => ['Student_id' => 1]] 
+    )->toArray();
 }
 
-// Prepare attendance map
+
 $attendanceMap = [];
 if ($selectedCourse && !empty($sessionDates)) {
     $attCursor = $attendanceCol->find([
@@ -63,6 +65,8 @@ if ($selectedCourse && !empty($sessionDates)) {
         $attendanceMap[$sid][$date] = $status;
     }
 }
+
+
 ?>
 
 <?php include 'header.php'; ?>
@@ -263,7 +267,7 @@ if ($selectedCourse && !empty($sessionDates)) {
         const avgValue = parseFloat(avgCell.textContent.replace('%', '').trim());
 
         if (isNaN(minPercentage)) {
-          row.style.display = ''; // Show all if input is empty or invalid
+          row.style.display = ''; 
         } else {
           row.style.display = avgValue >= minPercentage ? '' : 'none';
         }

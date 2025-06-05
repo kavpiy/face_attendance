@@ -4,7 +4,7 @@ require '../vendor/autoload.php';
 
 use MongoDB\Client;
 
-// Check if admin is logged in
+
 if (!isset($_SESSION['lecture_id']) || !isset($_SESSION['lecture_name']) || !isset($_SESSION['lecture_email'])) {
     header("Location: admin_dashboard.php");
     exit;
@@ -14,12 +14,12 @@ $lecture_id = $_SESSION['lecture_id'];
 $lecture_name = $_SESSION['lecture_name'];
 $lecture_email = $_SESSION['lecture_email'];
 
-// Connect to MongoDB
+
 $client = new Client("mongodb+srv://kavindupiyumal0121:7mQRouCy34geTQGS@cluster0.erbnzvi.mongodb.net/");
 $db = $client->face_attendance;
 $collection = $db->lectures;
 
-// Fetch admin data including profile image
+
 $lecture = $collection->findOne(['Lecture_id' => $lecture_id]);
 $profileImage = $lecture['profile_image'] ?? null;
 
@@ -28,7 +28,7 @@ $error = '';
 $uploadSuccess = '';
 $uploadError = '';
 
-// Handle password change
+
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['current_password'])) {
     $currentPassword = $_POST['current_password'] ?? '';
     $newPassword = $_POST['new_password'] ?? '';
@@ -44,14 +44,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['current_password'])) 
     }
 }
 
-// Handle profile picture upload
+
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_FILES['profile_picture'])) {
     $uploadDir = 'uploads/profile_pictures/';
     if (!file_exists($uploadDir)) {
         mkdir($uploadDir, 0777, true);
     }
     
-    // Delete old image if exists
+
     if ($profileImage && file_exists($profileImage)) {
         unlink($profileImage);
     }
@@ -60,20 +60,20 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_FILES['profile_picture'])) 
     $fileName = $lecture_id . '_' . time() . '.' . $fileExtension;
     $targetPath = $uploadDir . $fileName;
     
-    // Validate image
+
     $validExtensions = ['jpg', 'jpeg', 'png', 'gif'];
     $check = getimagesize($_FILES['profile_picture']['tmp_name']);
     
     if ($check !== false && in_array($fileExtension, $validExtensions)) {
-        if ($_FILES['profile_picture']['size'] <= 5000000) { // 5MB limit
+        if ($_FILES['profile_picture']['size'] <= 5000000) { 
             if (move_uploaded_file($_FILES['profile_picture']['tmp_name'], $targetPath)) {
-                // Update MongoDB with the new image path
+                
                 $collection->updateOne(
                     ['Lecture_id' => $lecture_id],
                     ['$set' => ['profile_image' => $targetPath]]
                 );
                 $uploadSuccess = "Profile picture uploaded successfully!";
-                $profileImage = $targetPath; // Update for current page load
+                $profileImage = $targetPath; 
             } else {
                 $uploadError = "Sorry, there was an error uploading your file.";
             }
@@ -311,7 +311,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_FILES['profile_picture'])) 
 </style>
 
 <script>
-  // Toggle password visibility
+
   document.querySelectorAll('.toggle-password').forEach(button => {
     button.addEventListener('click', function() {
       const target = document.getElementById(this.dataset.target);
@@ -328,8 +328,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_FILES['profile_picture'])) 
       }
     });
   });
-  
-  // Form validation
+
+
   (function() {
     'use strict';
     const forms = document.querySelectorAll('.needs-validation');
@@ -346,7 +346,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_FILES['profile_picture'])) 
     });
   })();
   
-  // Clear upload messages when modal is closed
+
   document.getElementById('uploadModal').addEventListener('hidden.bs.modal', function () {
     const alerts = this.querySelectorAll('.alert');
     alerts.forEach(alert => alert.remove());

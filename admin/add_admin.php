@@ -13,11 +13,11 @@ if (!isset($_SESSION['lecture_id']) || $_SESSION['lecture_id'] !== 'L001') {
 $success = "";
 $error = "";
 
-// MongoDB connection
+
 $client = new Client("mongodb+srv://kavindupiyumal0121:7mQRouCy34geTQGS@cluster0.erbnzvi.mongodb.net/face_attendance");
 $collection = $client->face_attendance->lectures;
 
-// Function to generate next Lecture_id
+
 function getNextLectureId($collection) {
     $lastLecture = $collection->find([], [
         'sort' => ['Lecture_id' => -1],
@@ -33,7 +33,7 @@ function getNextLectureId($collection) {
     return "L" . str_pad($number, 3, '0', STR_PAD_LEFT);
 }
 
-// Handle form submission
+
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $lecture_name = trim($_POST['lecture_name']);
     $lecture_email = trim($_POST['lecture_email']);
@@ -72,7 +72,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     }
 }
 
-// Fetch all lectures to display in the table
+
 $lectures = $collection->find([], ['sort' => ['created_at' => -1]]);
 ?>
 
@@ -194,7 +194,6 @@ $lectures = $collection->find([], ['sort' => ['created_at' => -1]]);
 </style>
 
 <script>
-  // Toggle password visibility
   document.querySelector('.toggle-password').addEventListener('click', function() {
     const passwordInput = document.getElementById('lecture_password');
     const icon = this.querySelector('i');
@@ -210,7 +209,7 @@ $lectures = $collection->find([], ['sort' => ['created_at' => -1]]);
     }
   });
 
-  // Delete confirmation
+
   document.querySelectorAll('.delete-btn').forEach(btn => {
     btn.addEventListener('click', function() {
       const adminId = this.dataset.id;
@@ -226,21 +225,21 @@ $lectures = $collection->find([], ['sort' => ['created_at' => -1]]);
         confirmButtonText: 'Yes, delete it!'
       }).then((result) => {
         if (result.isConfirmed) {
-          // AJAX request to delete would go here
+          
           Swal.fire(
             'Deleted!',
             'The admin has been removed.',
             'success'
           ).then(() => {
-            // Reload page after deletion
+           
             window.location.reload();
           });
         }
       });
     });
   });
+  
 
-  // Form validation
   document.getElementById('adminForm').addEventListener('submit', function(e) {
     const password = document.getElementById('lecture_password').value;
     if (password.length < 8) {

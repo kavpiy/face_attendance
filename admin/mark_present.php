@@ -19,7 +19,7 @@ try {
   $client = new Client("mongodb+srv://kavindupiyumal0121:7mQRouCy34geTQGS@cluster0.erbnzvi.mongodb.net/face_attendance");
   $collection = $client->face_attendance->attendance;
 
-  // Upsert attendance record
+
   $collection->updateOne(
     [
       'Student_id' => $studentId,

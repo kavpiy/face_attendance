@@ -45,14 +45,14 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 <body class="bg-light">
     <div class="container d-flex justify-content-center align-items-center min-vh-100">
         <div class="card shadow-lg border-0 rounded-4 overflow-hidden" style="width: 100%; max-width: 450px;">
-            <!-- Card Header -->
+           
             <div class="card-header bg-primary bg-gradient text-white text-center py-4">
                 <h3 class="fw-bold mb-0">
                     <i class="fas fa-user-graduate me-2"></i> Student Login
                 </h3>
             </div>
             
-            <!-- Card Body -->
+            
             <div class="card-body p-4 p-md-5">
                 <?php if ($error): ?>
                     <div class="alert alert-danger alert-dismissible fade show">
@@ -63,7 +63,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 <?php endif; ?>
 
                 <form method="post" action="">
-                    <!-- Student ID Input -->
+                    
                     <div class="mb-4">
                         <label for="student_id" class="form-label fw-bold">
                             Student ID
@@ -77,7 +77,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                         </div>
                     </div>
 
-                    <!-- Password Input with Toggle -->
+                    
                     <div class="mb-4">
                         <label for="password" class="form-label fw-bold">
                             Password
@@ -94,12 +94,12 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                         </div>
                     </div>
 
-                    <!-- Login Button -->
+                    
                     <button type="submit" class="btn btn-primary w-100 py-2 fw-bold mb-3">
                         <i class="fas fa-sign-in-alt me-2"></i> Login
                     </button>
 
-                    <!-- Links -->
+                    
                     <div class="d-flex justify-content-between mt-4">
                         <a href="../login.php" class="text-decoration-none text-secondary">
                             <i class="fas fa-arrow-left me-1"></i> Back to selection
@@ -113,10 +113,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         </div>
     </div>
 
-    <!-- Bootstrap JS Bundle with Popper -->
+
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
     
-    <!-- Password Toggle Script -->
+
     <script>
         document.getElementById('togglePassword').addEventListener('click', function() {
             const passwordInput = document.getElementById('password');

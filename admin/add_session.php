@@ -3,7 +3,7 @@ session_start();
 require '../vendor/autoload.php';
 use MongoDB\Client;
 
-// Check if admin is logged in
+
 if (!isset($_SESSION['lecture_id'])) {
     header("Location: admin_login.php");
     exit();
@@ -19,18 +19,18 @@ $students = $db->students;
 $success = '';
 $error = '';
 
-// Generate new Session ID
+
 $lastSession = $sessions->find([], ['sort' => ['Session_id' => -1], 'limit' => 1])->toArray();
 $newIdNum = !empty($lastSession) ? intval(substr($lastSession[0]['Session_id'], 1)) + 1 : 1;
 $newSessionId = 'S' . str_pad($newIdNum, 3, '0', STR_PAD_LEFT);
 
-// Get academic years
+
 $academicYears = $students->distinct('Academic_year');
 
-// Get all courses
+
 $allCourses = $courses->find([], ['sort' => ['Course_name' => 1]])->toArray();
 
-// Form submission
+
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $courseId = $_POST['course_id'];
     $academicYear = $_POST['academic_year'];
@@ -39,7 +39,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $end = $_POST['endtime'];
 
     try {
-        // Validate time
         if (strtotime($end) <= strtotime($start)) {
             throw new Exception("End time must be after start time");
         }
@@ -59,10 +58,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     }
 }
 
-// Get last 10 sessions
+
 $latestSessions = $sessions->find([], ['sort' => ['Date' => -1, 'Starttime' => -1], 'limit' => 10])->toArray();
 
-// Load all courses into a key-value map
+
 $courseMap = [];
 foreach ($courses->find() as $course) {
     $courseMap[$course['Course_id']] = $course['Course_name'];
@@ -231,7 +230,6 @@ function getSessionStatus($session) {
 </style>
 
 <script>
-  // Courses embedded in JS
   const allCourses = <?= json_encode($allCourses) ?>;
 
   const levelSelect = document.getElementById("level");
@@ -250,7 +248,7 @@ function getSessionStatus($session) {
     });
   });
 
-  // Form validation
+
   document.getElementById('sessionForm').addEventListener('submit', function(e) {
     const startTime = document.querySelector('input[name="starttime"]').value;
     const endTime = document.querySelector('input[name="endtime"]').value;
@@ -265,12 +263,11 @@ function getSessionStatus($session) {
     }
   });
 
-  // Set default time to current time + 30 minutes
+
   document.addEventListener('DOMContentLoaded', function() {
     const now = new Date();
     const later = new Date(now.getTime() + 30 * 60000);
     
-    // Format time as HH:MM
     const formatTime = (date) => {
       return date.toTimeString().slice(0, 5);
     };

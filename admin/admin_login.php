@@ -14,7 +14,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $client = new Client("mongodb+srv://kavindupiyumal0121:7mQRouCy34geTQGS@cluster0.erbnzvi.mongodb.net/face_attendance");
         $collection = $client->face_attendance->lectures;
 
-        $lecture = $collection->findOne(['Lecture_email' => $email]);
+        // Case-insensitive email check
+        $lecture = $collection->findOne([
+            'Lecture_email' => ['$regex' => '^' . preg_quote($email) . '$', '$options' => 'i']
+        ]);
 
         if ($lecture && $lecture['Lecture_password'] === $password) {
             $_SESSION['lecture_id'] = $lecture['Lecture_id'];
@@ -40,7 +43,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <!-- Load Bootstrap CSS first -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
-    <!-- Then load Font Awesome - Updated CDN link -->
+    <!-- Font Awesome CDN -->
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" rel="stylesheet">
     <style>
         .password-toggle {
@@ -48,10 +51,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             transition: all 0.3s;
         }
         .password-toggle:hover {
-            background-color:rgb(95, 95, 95) !important;
+            background-color: rgb(95, 95, 95) !important;
         }
-        
-        /* Debugging styles - can be removed */
         .debug-icon {
             color: red;
             font-size: 24px;
@@ -59,10 +60,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     </style>
 </head>
 <body class="bg-light">
-    <!-- Debugging icon - should appear red if Font Awesome loads -->
-    <div class="debug-icon" style="position: absolute; top: 10px; left: 10px;">
-        
-    </div>
+    <!-- Debugging icon -->
+    <div class="debug-icon" style="position: absolute; top: 10px; left: 10px;"></div>
 
     <div class="container d-flex justify-content-center align-items-center min-vh-100">
         <div class="card shadow-lg border-0 rounded-4 overflow-hidden" style="width: 100%; max-width: 450px;">
@@ -75,20 +74,21 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             
             <!-- Card Body -->
             <div class="card-body p-4 p-md-5">
-                <!-- Test icon in alert -->
-                <div class="alert alert-info d-none">
-                    <i class="fas fa-info-circle me-2"></i> Testing icons
-                </div>
+                
+                <!-- Show error message if any -->
+                <?php if (!empty($error)) : ?>
+                    <div class="alert alert-danger">
+                        <i class="fas fa-exclamation-circle me-2"></i> <?= htmlspecialchars($error) ?>
+                    </div>
+                <?php endif; ?>
 
                 <form method="post" action="">
                     <!-- Email Input -->
                     <div class="mb-4">
-                        <label for="email" class="form-label fw-bold">
-                            Email Address
-                        </label>
+                        <label for="email" class="form-label fw-bold">Email Address</label>
                         <div class="input-group">
                             <span class="input-group-text bg-light">
-                                <i class="fas fa-envelope me-2"></i> 
+                                <i class="fas fa-envelope me-2"></i>
                             </span>
                             <input type="email" class="form-control" id="email" name="email" required 
                                    placeholder="Enter your admin email">
@@ -97,9 +97,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
                     <!-- Password Input with Toggle -->
                     <div class="mb-4">
-                        <label for="password" class="form-label fw-bold">
-                            Password
-                        </label>
+                        <label for="password" class="form-label fw-bold">Password</label>
                         <div class="input-group">
                             <span class="input-group-text bg-light">
                                 <i class="fas fa-key"></i>
@@ -131,30 +129,28 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         </div>
     </div>
 
-    <!-- Bootstrap JS Bundle with Popper -->
+    <!-- Bootstrap JS Bundle -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
     
     <!-- Password Toggle Script -->
     <script>
-        document.getElementById('togglePassword').addEventListener('click', function() {
+        document.getElementById('togglePassword').addEventListener('click', function () {
             const passwordInput = document.getElementById('password');
             const icon = this.querySelector('i');
             
             if (passwordInput.type === 'password') {
                 passwordInput.type = 'text';
                 icon.classList.replace('fa-eye', 'fa-eye-slash');
-                this.classList.add('active');
             } else {
                 passwordInput.type = 'password';
                 icon.classList.replace('fa-eye-slash', 'fa-eye');
-                this.classList.remove('active');
             }
         });
-        
-        // Debugging: Check if Font Awesome loaded
+
+        // Debug: Check if Font Awesome loaded
         setTimeout(() => {
             if (!document.querySelector('.fa-bug').clientHeight) {
-                alert('Font Awesome not loading! Check your network or CDN link.');
+                console.log('Font Awesome may not be loaded.');
             }
         }, 1000);
     </script>

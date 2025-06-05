@@ -26,7 +26,7 @@
     }
 
     body {
-      padding-top: 60px; /* Ensure content does not go under navbar */
+      padding-top: 60px;
     }
   </style>
 </head>
@@ -34,7 +34,7 @@
 
 <div class="d-flex" id="wrapper">
 
-  <!-- Sidebar -->
+
 <!-- Sidebar -->
 <div class="bg-dark min-vh-100 pt-4" id="sidebar-wrapper">
   <div class="list-group list-group-flush p-2">
@@ -54,7 +54,6 @@
     <!-- Top Navbar -->
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top shadow">
       <div class="container-fluid">
-        <!-- Sidebar toggle and brand -->
         <div class="d-flex align-items-center">
           <button class="btn btn-sm btn-outline-light me-2" id="menu-toggle">
             <i class="fas fa-bars"></i>
@@ -65,7 +64,7 @@
           </a>
         </div>
 
-        <!-- Right side message -->
+        
         <div class="ms-auto text-white d-none d-md-block">
           You are not logged in. (<a href="login.php" class="text-decoration-none text-info">Log in</a>)
         </div>
@@ -73,6 +72,6 @@
     </nav>
 
 
-<!-- Bootstrap Bundle with Popper -->
+
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 

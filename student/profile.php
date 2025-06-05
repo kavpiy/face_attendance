@@ -1,7 +1,7 @@
 <?php
 session_start();
 
-// Redirect to login if not logged in
+
 if (!isset($_SESSION['student_id'])) {
     header("Location: student_login.php");
     exit();
@@ -27,7 +27,7 @@ $error = '';
 $uploadSuccess = '';
 $uploadError = '';
 
-// Handle password update
+
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['current_password'])) {
     $currentPassword = $_POST['current_password'] ?? '';
     $newPassword = $_POST['new_password'] ?? '';
@@ -54,7 +54,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_FILES['profile_picture'])) 
         mkdir($uploadDir, 0777, true);
     }
     
-    // Delete old image if exists
+
     if ($profileImage && file_exists($profileImage)) {
         unlink($profileImage);
     }
@@ -63,20 +63,20 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_FILES['profile_picture'])) 
     $fileName = $student_id . '_' . time() . '.' . $fileExtension;
     $targetPath = $uploadDir . $fileName;
     
-    // Validate image
+
     $validExtensions = ['jpg', 'jpeg', 'png', 'gif'];
     $check = getimagesize($_FILES['profile_picture']['tmp_name']);
     
     if ($check !== false && in_array($fileExtension, $validExtensions)) {
-        if ($_FILES['profile_picture']['size'] <= 5000000) { // 5MB limit
+        if ($_FILES['profile_picture']['size'] <= 5000000) { 
             if (move_uploaded_file($_FILES['profile_picture']['tmp_name'], $targetPath)) {
-                // Update MongoDB with the new image path
+                
                 $collection->updateOne(
                     ['Student_id' => $student_id],
                     ['$set' => ['profile_image' => $targetPath]]
                 );
                 $uploadSuccess = "Profile picture uploaded successfully!";
-                $profileImage = $targetPath; // Update for current page load
+                $profileImage = $targetPath; 
             } else {
                 $uploadError = "Sorry, there was an error uploading your file.";
             }
@@ -94,7 +94,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_FILES['profile_picture'])) 
 <div class="container-fluid mt-4">
   <div class="row justify-content-center">
 
-    <!-- Profile Card -->
+
     <div class="col-md-12 mb-4">
       <div class="card shadow-sm border-0">
         <div class="card-body d-flex align-items-center gap-4">
@@ -361,7 +361,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_FILES['profile_picture'])) 
     });
   })();
   
-  // Clear upload messages when modal is closed
+
   document.getElementById('uploadModal').addEventListener('hidden.bs.modal', function () {
     const alerts = this.querySelectorAll('.alert');
     alerts.forEach(alert => alert.remove());

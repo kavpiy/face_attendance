@@ -1,5 +1,5 @@
-</div> <!-- end of #page-content-wrapper -->
-</div> <!-- end of #wrapper -->
+</div> 
+</div> 
 
 <!-- Footer -->
 <footer class="bg-dark text-white text-center py-3" >
@@ -9,7 +9,7 @@
 </footer>
 
 
-<!-- Bootstrap JS -->
+
 <script>
   document.getElementById('menu-toggle').addEventListener('click', function () {
     document.getElementById('sidebar-wrapper').classList.toggle('active');
